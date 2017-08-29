@@ -8,11 +8,27 @@
 
 import UIKit
 
-class MainViewController: UITabBarController {
+class MainViewController: UITabBarController
+{
 
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
+        tabBar.tintColor = UIColor.orange
+        _addChildVC(childVC: HomeTableViewController(), title: "首页", imageName: "tabbar_home")
+        _addChildVC(childVC: MessageTableViewController(), title: "信息", imageName: "tabbar_message_center")
+        _addChildVC(childVC: DiscoverTableViewController(), title: "广场", imageName: "tabbar_discover")
+        _addChildVC(childVC: ProfileTableViewController(), title: "我", imageName: "tabbar_profile")
+    }
+    
+    private func _addChildVC(childVC:UIViewController,title:String,imageName:String)
+    {
+        childVC.tabBarItem.image = UIImage(named: imageName)
+        childVC.tabBarItem.selectedImage = UIImage(named: imageName+"_highlighted")
+        childVC.title = title
 
-        // Do any additional setup after loading the view.
+        let nav = UINavigationController()
+        nav.addChildViewController(childVC)
+        addChildViewController(nav)
     }
 }
