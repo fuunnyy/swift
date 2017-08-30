@@ -8,34 +8,50 @@
 
 import UIKit
 
-class HomeTableViewController: UITableViewController {
-
-    override func viewDidLoad() {
+class HomeTableViewController: BaseTableViewController
+{
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: "abc")
+        if !usrLogin
+        {
+           visitorView?.setupVisitorInfo(isHome: true, imageName: "visitordiscover_feed_image_house", message: "关注一些人，回这里看看有什么惊喜")
+        }
+        
+        setupNav()
     }
+    
+    //MARK:自定义导航控制器
+    private func setupNav()
+    {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named:"navigationbar_friendattention"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(HomeTableViewController.leftItemClick))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"navigationbar_pop"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(HomeTableViewController.rightItemClick))
+        // 2.初始化标题按钮
+        let titleBtn = TitleBtn()
+        titleBtn.setTitle("sdfas", for: UIControlState.normal)
+//        titleBtn.addTarget(self, action:Selector("HomeTableViewController.titleBtnClick:"), for: UIControlEvents.touchUpInside)
+        titleBtn.addTarget(self, action: Selector("titleBtnClick()"), for: UIControlEvents.touchUpInside)
+        navigationItem.titleView = titleBtn
+    }
+    
+    func titleBtnClick(btn: TitleBtn)
+    {
+        btn.isSelected = !btn.isSelected
+    }
+    func leftItemClick()
+    {
+        print(#function)
+    }
+    func rightItemClick()
+    {
+        print(#function)
+    }
+
 }
 
 extension HomeTableViewController
 {
-    // MARK: - Table view delegate
-    override func numberOfSections(in tableView: UITableView) -> Int
-    {
-        return 2
-    }
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-    {
-        print("\(indexPath.section)-----\(indexPath.row)")
-    }
-    // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        return 3
-    }
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
-     let cell = tableView.dequeueReusableCell(withIdentifier: "abc", for: indexPath)
-     cell.backgroundColor = UIColor.yellow
-     return cell
-    }
+    
 }
+
+
